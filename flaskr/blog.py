@@ -26,7 +26,7 @@ def create():
         error = None
 
         if not title:
-            error = 'Title is required.'
+            error = 'Se requiere título.'
 
         if error is not None:
             flash(error)
@@ -43,9 +43,9 @@ def create():
     return render_template('blog/create.html')
 def get_post(id, check_author=True):
     post = get_db().execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' WHERE p.id = ?',
+        'SELECCIONAR p.id, title, body, created, author_id, username'
+        ' DE post p UNIRTE user u ON p.author_id = u.id'
+        ' DÓNDE p.id = ?',
         (id,)
     ).fetchone()
 

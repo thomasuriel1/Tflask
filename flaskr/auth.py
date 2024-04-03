@@ -12,25 +12,25 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form['Usuario']
+        password = request.form['Contraseña']
         db = get_db()
         error = None
 
         if not username:
-            error = 'Username is required.'
+            error = 'Se requiere un Usuario.'
         elif not password:
-            error = 'Password is required.'
+            error = 'Se requiere una contraseña.'
 
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (username, password) VALUES (?, ?)",
+                    "INSERTAR EN usuario (username, password) VALUES (?, ?)",
                     (username, generate_password_hash(password)),
                 )
                 db.commit()
             except db.IntegrityError:
-                error = f"User {username} is already registered."
+                error = f"El Usuario {username} ya está registrado."
             else:
                 return redirect(url_for("auth.login"))
 
@@ -40,8 +40,8 @@ def register():
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form['Usuario']
+        password = request.form['Contraseña']
         db = get_db()
         error = None
         user = db.execute(
@@ -49,9 +49,9 @@ def login():
         ).fetchone()
 
         if user is None:
-            error = 'Incorrect username.'
+            error = 'Usuario incorrecto.'
         elif not check_password_hash(user['password'], password):
-            error = 'Incorrect password.'
+            error = 'Contraseña.'
 
         if error is None:
             session.clear()
