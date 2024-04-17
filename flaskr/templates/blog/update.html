@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block content %}
-  <form method="posteo">
-    <label for="titulo">Title</label>
-    <input name="titulo" id="titulo"
-      value="{{ request.form['titulo'] or post['titulo'] }}" required>
+  <form method="post">
+    <label for="title">Title</label>
+    <input name="title" id="title"
+      value="{{ request.form['title'] or post['title'] }}" required>
     <label for="body">Body</label>
     <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
-    <input type="submit" value="Save">
+    <input type="submit" value="save">
   </form>
   <hr>
   <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">

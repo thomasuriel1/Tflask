@@ -61,7 +61,7 @@ def get_post(id, check_author=True):
 def update(id):
     post = get_post(id)
 
-    if request.method == 'POST':
+    if request.method == 'post':
         title = request.form['title']
         body = request.form['body']
         error = None
@@ -82,7 +82,7 @@ def update(id):
             return redirect(url_for('blog.index'))
 
     return render_template('blog/update.html', post=post)
-@bp.route('/<int:id>/delete', methods=('POST',))
+@bp.route('/<int:id>/delete', methods=('post',))
 @login_required
 def delete(id):
     get_post(id)
