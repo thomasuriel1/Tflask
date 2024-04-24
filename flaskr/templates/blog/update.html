@@ -15,6 +15,6 @@
   </form>
   <hr>
   <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
-    <input class="danger" type="submit" value="Eliminar" onclick="return confirm('Estas seguro?');">
+    <input class="danger" type="submit" value="delete" onclick="return confirm('Estas seguro?');">
   </form>
 {% endblock %}
