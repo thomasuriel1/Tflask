@@ -9,12 +9,13 @@ from flaskr.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-@bp.route('/register', methods=('GET', 'post'))
+@bp.route('/register', methods=('GET', 'POST'))
 def register():
-    if request.method == 'post':
+    if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
+        email = request.form['email']
         db = get_db()
         error = None
 
@@ -24,12 +25,13 @@ def register():
             error = 'Se requiere una contraseña.'
         elif confirm_password != password:
             error = 'Las contraseñas no coinciden' 
-
+        elif not email:
+            error = 'Se requiere email'
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (username, password, confirm_password) VALUES (?, ?, ?)",
-                    (username, generate_password_hash(password), confirm_password),
+                    "INSERT INTO user (username, password, confirm_password,email) VALUES (?, ?, ?, ?)",
+                    (username, generate_password_hash(password), confirm_password, email),
                 )
                 db.commit()
             except db.IntegrityError:
